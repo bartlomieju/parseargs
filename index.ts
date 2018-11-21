@@ -1,4 +1,17 @@
-export default function parseArgs(args, options = null) : { [key: string]: any } {
+
+interface ArgParsingOptions {
+    unknown?: Function;
+    boolean?: Boolean;
+    alias?: { [key: string]: string[] };
+    // TODO:
+    string?: any; 
+    // TODO: 
+    default?: { [key: string]: any };
+    '--'?: Boolean;
+    stopEarly?: Boolean;
+}
+
+export default function parseArgs(args, options?: ArgParsingOptions) : { [key: string]: any } {
     if (!options) options = {};
     
     const flags = { bools : {}, strings : {}, unknownFn: null, allBools: false };
