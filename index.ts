@@ -1,25 +1,37 @@
-
-interface ArgParsingOptions {
+export interface ArgParsingOptions {
     unknown?: Function;
-    boolean?: Boolean;
-    alias?: { [key: string]: string[] };
-    // TODO:
-    string?: any; 
-    // TODO: 
+    boolean?: Boolean | string | string[];
+    alias?: { [key: string]: string | string[] };
+    string?: string | string[]; 
     default?: { [key: string]: any };
     '--'?: Boolean;
     stopEarly?: Boolean;
 }
 
-export default function parseArgs(args, options?: ArgParsingOptions) : { [key: string]: any } {
-    if (!options) options = {};
-    
-    const flags = { bools : {}, strings : {}, unknownFn: null, allBools: false };
+const DEFAULT_OPTIONS = {
+    unknown: i => i,
+    boolean: false,
+    alias: {},
+    string: [],
+    default: {},
+    '--': false,
+    stopEarly: false,
+};
 
-    if (typeof options['unknown'] === 'function') {
-        flags.unknownFn = options['unknown'];
-    }
+export default function parseArgs(args, initialOptions?: ArgParsingOptions) : { [key: string]: any } {    
+    const options : ArgParsingOptions = {
+        ...DEFAULT_OPTIONS,
+        ...(initialOptions || {})
+    };
 
+    const flags = { 
+        bools : {}, 
+        strings : {}, 
+        unknownFn: options.unknown!, 
+        allBools: false,
+     };
+
+    // TODO: get rid of this, providing two different options
     if (typeof options['boolean'] === 'boolean' && options['boolean']) {
       flags.allBools = true;
     } else {
@@ -28,8 +40,9 @@ export default function parseArgs(args, options?: ArgParsingOptions) : { [key: s
       });
     }
     
+
     const aliases = {};
-    Object.keys(options.alias || {}).forEach(function (key) {
+    Object.keys(options.alias).forEach(function (key) {
         aliases[key] = [].concat(options.alias[key]);
         aliases[key].forEach(function (x) {
             aliases[x] = [key].concat(aliases[key].filter(function (y) {
@@ -45,7 +58,7 @@ export default function parseArgs(args, options?: ArgParsingOptions) : { [key: s
         }
      });
 
-    const defaults = options['default'] || {};
+    const defaults = options.default!;
     
     const argv = { _ : [] };
     Object.keys(flags.bools).forEach(function (key) {
