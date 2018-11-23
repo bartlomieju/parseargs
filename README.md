@@ -17,7 +17,7 @@ $ deno example.ts -a beep -b boop
 ```
 
 ```
-$ node example.ts -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
+$ deno example.ts -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
 { _: [ 'foo', 'bar', 'baz' ],
   x: 3,
   y: 4,
