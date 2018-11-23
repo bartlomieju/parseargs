@@ -1,4 +1,4 @@
-# parseargs
+# parseargs [![Build Status](https://travis-ci.org/bartlomieju/parseargs.svg?branch=master)](https://travis-ci.org/bartlomieju/parseargs)
 
 Command line arguments parser for Deno based on minimist
 
@@ -58,6 +58,10 @@ and `parsedArgs['--']` with everything after the `--`. Here's an example:
 defined in the `options` configuration object. If the function returns `false`, the
 unknown option is not added to `parsedArgs`.
 
-# license
+# Contributing
+
+Feel free to open PRs with suggestions.
+
+# License
 
 MIT
