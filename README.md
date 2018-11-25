@@ -2,6 +2,12 @@
 
 Command line arguments parser for Deno based on minimist
 
+# Installation
+`parseargs` is available via Deno registry.
+```ts
+import parseArgs from "https://deno.land/x/parseargs/index.ts";
+```
+
 # Example
 
 ``` ts
